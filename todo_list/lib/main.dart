@@ -5,6 +5,8 @@ void main() {
 }
 
 class TodoApp extends StatefulWidget {
+  const TodoApp({super.key});
+
   @override
   State<TodoApp> createState() => _TodoAppState();
 }
@@ -55,12 +57,12 @@ class _TodoAppState extends State<TodoApp> {
                   SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: _addTask,
-                    child: Text("+", style: TextStyle(fontSize: 24)),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 2, 11, 101),
                       foregroundColor: Colors.white,
                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 12),
                     ),
+                    child: Text("+", style: TextStyle(fontSize: 24)),
                   ),
                 ],
               ),
