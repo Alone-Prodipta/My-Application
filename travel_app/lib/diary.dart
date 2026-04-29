@@ -6,7 +6,6 @@ class CountriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Countries")),
       body: Column(
         children: [
           // Text field at the top
