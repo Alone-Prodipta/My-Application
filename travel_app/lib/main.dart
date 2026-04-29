@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'diary.dart';
+import 'diary.dart' as diary;
+import 'profile.dart' as profile;
 
 void main() {
   runApp(const MyApp());
@@ -43,10 +44,10 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
 
     // Diary page (no image)
-    const CountriesPage(),
+    const diary.CountriesPage(),
 
     // Profile page placeholder
-    const Center(child: Text("Profile Page")),
+    const profile.CountriesPage(),
   ];
 
   void _onItemTapped(int index) {

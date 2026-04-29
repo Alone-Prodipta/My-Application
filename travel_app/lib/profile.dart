@@ -6,3 +6,10 @@ class CountriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: CircleAvatar(
+        radius: 50,
+        backgroundImage: AssetImage('images/stone.png'),
+      ),
+    );
+  }
+}
