@@ -1,8 +1,40 @@
 import 'package:flutter/material.dart';
-import 'profile.dart';
 
-class CountriesPage extends StatelessWidget {
+class CountriesPage extends StatefulWidget {
   const CountriesPage({super.key});
+
+  @override
+  State<CountriesPage> createState() => _CountriesPageState();
+}
+
+class _CountriesPageState extends State<CountriesPage> {
+  late TextEditingController _searchController;
+  String? foundCountry;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void performLinearSearch(String find) {
+    String? found;
+    for (int k = 0; k < countries.length; k++) {
+      if (countries[k] == find) {
+        found = countries[k];
+        break;
+      }
+    }
+    setState(() {
+      foundCountry = found;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +45,16 @@ class CountriesPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10),
             child: TextField(
+              controller: _searchController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Enter your text',
               ),
+              onChanged: (value) {
+                if (value.isNotEmpty) {
+                  performLinearSearch(value);
+                }
+              },
             ),
           ),
 
@@ -27,7 +65,9 @@ class CountriesPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: countries.length,
               itemBuilder: (context, index) {
+                bool isFound = foundCountry == countries[index];
                 return Card(
+                  color: isFound ? Colors.yellowAccent : Colors.white,
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
@@ -49,25 +89,32 @@ class CountriesPage extends StatelessWidget {
   }
 }
 
-final List<String> countries = [
-  'Turkey',
-  'Italy',
-  'Spain',
-  'France',
-  'Greece',
-  'Japan',
-  'Australia',
-  'Brazil',
-  'Canada',
-  'Egypt',
-  'India',
-  'Mexico',
-  'Netherlands',
-  'Portugal',
-  'Russia',
-  'South Africa',
-  'Thailand',
-  'United Kingdom',
-  'United States',
-  'Vietnam',
-];
+final List<String> countries = ['Turkey','Italy','Spain','France','Greece','Japan','Australia','Brazil','Canada','Egypt','India','Mexico','Netherlands','Portugal','Russia','South Africa','Thailand','United Kingdom','United States','Vietnam'];
+class Profile_page extends StatefulWidget {
+  const Profile_page({super.key});
+
+  @override
+  State<Profile_page> createState() => _Profile_pageState();
+}
+
+class _Profile_pageState extends State<Profile_page>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
