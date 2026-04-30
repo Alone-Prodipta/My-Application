@@ -6,9 +6,68 @@ class CountriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CircleAvatar(
-        radius: 50,
-        backgroundImage: AssetImage('images/stone.png'),
+      body: Column(
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 40),
+              child: CircleAvatar(
+                radius: 100,
+                backgroundImage: AssetImage('images/disc.jpg'),
+              ),
+            ),
+          ),
+          SizedBox(height: 0),
+          Text(
+            'Bill gates',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(50),),
+                    ),
+                    labelText: 'Email',
+                  ),
+                ),
+                SizedBox(height: 16),
+                TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                    ),
+                    labelText: 'Password',
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      print('Login button pressed');
+                    },
+
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                      ),
+                      child:Text(
+                        'Login',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
