@@ -60,8 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: const TabBarView(
           children: [
-            MyIncome(),   // ✅ loads from Income.dart
-            MyExpense(),  // ✅ loads from Expense.dart
+            MyIncome(),   
+            MyExpense(),  
           ],
         ),
       ),
