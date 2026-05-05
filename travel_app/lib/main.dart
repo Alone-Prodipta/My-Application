@@ -34,10 +34,10 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isLoadingNotes = true;
 
   List<Widget> get _pages => [
-        _buildHomePage(),
-        const diary.CountriesPage(),
-        const profile.CountriesPage(),
-      ];
+    _buildHomePage(),
+    const diary.CountriesPage(),
+    const profile.CountriesPage(),
+  ];
 
   @override
   void initState() {
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 _saveNotes();
                 Navigator.of(context).pop();
               },
-              child: const Text('Save'),
+              child: const Icon(Icons.add),
             ),
           ],
         );
@@ -133,105 +133,126 @@ class _MyHomePageState extends State<MyHomePage> {
         ? const Center(child: CircularProgressIndicator())
         : Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(
-                    'images/gul.jpg',
-                    height: 220,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(
+                      'images/gul.jpg',
+                      height: 220,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Travel Notes',
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Save your ideas, memories, and travel plans right here.',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _noteController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Add a new note',
-                          hintText: 'Write a memory, plan, or destination idea',
-                        ),
-                        maxLines: 2,
-                      ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'My Travel Memories',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
-                    const SizedBox(width: 12),
-                    ElevatedButton(
-                      onPressed: _addNote,
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 16,
-                        ),
-                      ),
-                      child: const Text('Save'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 18),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('My notes', style: Theme.of(context).textTheme.titleMedium),
-                    Text('${_notes.length} saved', style: const TextStyle(color: Colors.grey)),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Expanded(
-                  child: _notes.isEmpty
-                      ? const Center(
-                          child: Text(
-                            'No notes yet. Add your first travel memory!',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 16, color: Colors.black54),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Save your ideas, memories, and travel plans right here.',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _noteController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Add a new note',
+                            hintText:
+                                'Write a memory, plan, or destination idea',
                           ),
-                        )
-                      : ListView.separated(
-                          itemCount: _notes.length,
-                          separatorBuilder: (_, __) => const SizedBox(height: 10),
-                          itemBuilder: (context, index) {
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                              elevation: 2,
-                              child: ListTile(
-                                title: Text(_notes[index]),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.edit, color: Colors.blue),
-                                      onPressed: () => _editNote(index),
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.delete, color: Colors.red),
-                                      onPressed: () => _deleteNote(index),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
+                          maxLines: 2,
                         ),
-                ),
-              ],
+                      ),
+                      const SizedBox(width: 12),
+                      ElevatedButton(
+                        onPressed: _addNote,
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18,
+                            vertical: 16,
+                          ),
+                        ),
+                        child: const Icon(Icons.add),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 18),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'My notes',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        '${_notes.length} saved',
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Expanded(
+                    child: _notes.isEmpty
+                        ? const Center(
+                            child: Text(
+                              'No notes yet. Add your first travel memory!',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          )
+                        : ListView.separated(
+                            itemCount: _notes.length,
+                            separatorBuilder: (_, _) =>
+                                const SizedBox(height: 10),
+                            itemBuilder: (context, index) {
+                              return Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                elevation: 2,
+                                child: ListTile(
+                                  title: Text(_notes[index]),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.edit,
+                                          color: Colors.blue,
+                                        ),
+                                        onPressed: () => _editNote(index),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                        ),
+                                        onPressed: () => _deleteNote(index),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                  ),
+                ],
+              ),
             ),
           );
   }
@@ -246,7 +267,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 0, 0, 94),
+        backgroundColor: const Color.fromARGB(255, 0, 0, 81),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+        ),
         title: Text(
           widget.title,
           style: const TextStyle(color: Colors.white, fontFamily: "Algerian"),
@@ -261,7 +285,7 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Diary'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
-        selectedItemColor: const Color.fromARGB(255, 0, 0, 94),
+        selectedItemColor: const Color.fromARGB(255, 0, 24, 51),
       ),
     );
   }

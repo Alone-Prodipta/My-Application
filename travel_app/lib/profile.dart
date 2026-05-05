@@ -13,15 +13,11 @@ class CountriesPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 40),
               child: CircleAvatar(
                 radius: 100,
-                backgroundImage: AssetImage('images/disc.jpg'),
+                child: Icon(  Icons.person,size: 100),
               ),
             ),
           ),
           SizedBox(height: 0),
-          Text(
-            'Bill gates',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
           SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
