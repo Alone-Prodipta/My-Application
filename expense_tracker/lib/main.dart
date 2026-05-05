@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'Income.dart';
+import 'Expense.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +39,18 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: CircleAvatar(
+                radius: 20,
+                child: Icon(
+                  Icons.person,
+                  size: 20,
+                ),
+              ),
+            ),
+          ],
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Income'),
@@ -46,8 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: const TabBarView(
           children: [
-            Center(child: Text('Income Tab Content')),
-            Center(child: Text('Expenses Tab Content')),
+            MyIncome(),   // ✅ loads from Income.dart
+            MyExpense(),  // ✅ loads from Expense.dart
           ],
         ),
       ),
