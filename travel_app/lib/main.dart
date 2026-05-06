@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Widget> get _pages => [
     _buildHomePage(),
     const diary.CountriesPage(),
-    const profile.CountriesPage(),
+    const profile.ProfilePage(),
   ];
 
   @override

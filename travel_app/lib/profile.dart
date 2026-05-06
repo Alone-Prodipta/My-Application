@@ -16,19 +16,6 @@ class _ProfilePageState extends State<ProfilePage> {
       length: 2, // Number of tabs
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          actions: const [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: CircleAvatar(
-                radius: 50,
-                child: Icon(
-                  Icons.person,
-                  size: 50,
-                ),
-              ),
-            ),
-          ],
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Sign in'),
@@ -38,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         body:const TabBarView(
           children: [
-            SigninPage(),
+            SignInPage(),
             LoginPage(),
           ],
         ),

@@ -48,7 +48,7 @@ class _CountriesPageState extends State<CountriesPage> {
               controller: _searchController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Enter your text',
+                labelText: 'Search',
               ),
               onChanged: (value) {
                 if (value.isNotEmpty) {
