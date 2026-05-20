@@ -14,6 +14,8 @@ class GalleryApp extends StatelessWidget {
     "https://picsum.photos/id/1043/400/400",
   ];
 
+  const GalleryApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -61,7 +63,7 @@ class GalleryApp extends StatelessWidget {
 
 class FullScreenImage extends StatelessWidget {
   final String imageUrl;
-  FullScreenImage({required this.imageUrl});
+  const FullScreenImage({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
