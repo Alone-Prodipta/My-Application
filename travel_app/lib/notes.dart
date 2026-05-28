@@ -146,8 +146,8 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
             const SizedBox(height: 12),
             ElevatedButton.icon(
               onPressed: _addNote,
-              icon: const Icon(Icons.add),
-              label: const Text('Save note'),
+              icon: const Icon(Icons.add, color: Colors.white),
+              label: const Text('Save note', style: TextStyle(color: Colors.white)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 0, 0, 81),
                 padding: const EdgeInsets.symmetric(vertical: 14),
