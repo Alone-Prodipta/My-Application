@@ -3,7 +3,7 @@
 $host = "localhost";
 $db_name = "travel_app";
 $username = "root"; // Default XAMPP username
-$password = "Prodipta_007#";    
+$password = "";    
 
 try {
     // Create a new secure PDO connection

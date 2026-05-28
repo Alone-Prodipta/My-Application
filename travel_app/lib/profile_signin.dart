@@ -35,7 +35,7 @@ class _SigninPageState extends State<SigninPage> {
     setState(() => _isLoading = true);
 
     // 10.0.2.2 is the special IP that tells the Android Emulator to look at your computer's local XAMPP Apache server
-    final url = Uri.parse('http://10.0.2.2/travel_api/signup.php');
+    final url = Uri.parse('http://10.0.2.2/travel%20app/signup.php');
 
     try {
       final response = await http.post(

@@ -26,7 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
         body:const TabBarView(
           children: [
             SigninPage(),
-            LoginPage(),
+            loginPage(),
           ],
         ),
       ),

@@ -22,8 +22,8 @@ class _loginPageState extends State<loginPage> {
     super.dispose();
   }
 
-  // 2. Network function to call your signup.php file
-  Future<void> _registerUser() async {
+  // 2. Network function to call your login.php file
+  Future<void> _loginUser() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
@@ -35,7 +35,7 @@ class _loginPageState extends State<loginPage> {
     setState(() => _isLoading = true);
 
     // 10.0.2.2 is the special IP that tells the Android Emulator to look at your computer's local XAMPP Apache server
-    final url = Uri.parse('http://10.0.2.2/travel_api/signup.php');
+    final url = Uri.parse('http://10.0.2.2/travel%20app/login.php');
 
     try {
       final response = await http.post(
@@ -118,7 +118,7 @@ class _loginPageState extends State<loginPage> {
                     child: _isLoading
                         ? const CircularProgressIndicator()
                         : ElevatedButton(
-                            onPressed: _registerUser, // Triggers backend function
+                            onPressed: _loginUser, // Triggers backend function
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50),
@@ -126,7 +126,7 @@ class _loginPageState extends State<loginPage> {
                               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                             ),
                             child: const Text(
-                              'login',
+                              'Login',
                               style: TextStyle(fontSize: 16),
                             ),
                           ),
