@@ -14,7 +14,7 @@ class GalleryApp extends StatelessWidget {
     "https://picsum.photos/id/1043/400/400",
   ];
 
-  const GalleryApp({super.key});
+   GalleryApp({super.key});
 
   @override
   Widget build(BuildContext context) {

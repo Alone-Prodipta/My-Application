@@ -5,6 +5,8 @@ void main() {
 }
 
 class MusicPlayer extends StatefulWidget {
+  const MusicPlayer({super.key});
+
   @override
   _MusicPlayerState createState() => _MusicPlayerState();
 }
@@ -156,7 +158,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
 
 class FullScreenImage extends StatelessWidget {
   final String imageUrl;
-  const FullScreenImage({required this.imageUrl});
+  const FullScreenImage({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
