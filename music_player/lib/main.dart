@@ -44,7 +44,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
               bottom: Radius.circular(20),
             ),
           ),
-          title: const Text("Music Player"),
+          title: const Text("Music Player",style: TextStyle(color: Colors.white),),
         ),
         body: Center(
           child: Column(
