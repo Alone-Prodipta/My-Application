@@ -12,9 +12,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'Travel App'),
+      home: MyHomePage(title: 'Travel App'),
     );
   }
 }
@@ -31,7 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   List<Widget> get _pages => [
-        _buildHomePage(),
+        // Default lander targets India dynamically initially
+        const TargetCountryPage(countryName: 'India', imageUrl: 'https://res.cloudinary.com/your_cloud/image/upload/india.jpg', showAppBar: false),
         const diary.CountriesPage(),
         const profile.ProfilePage(),
       ];
@@ -40,40 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _selectedIndex = index;
     });
-  }
-
-  Widget _buildHomePage() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.asset(
-              'images/gul.jpg',
-              height: 220,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'My Travel Memories',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Save your ideas, memories, and travel plans right here.',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          const SizedBox(height: 18),
-          const TravelNotesModule(),
-          const SizedBox(height: 20),
-        ],
-      ),
-    );
   }
 
   @override
@@ -101,5 +68,69 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedItemColor: const Color.fromARGB(255, 0, 24, 51),
       ),
     );
+  }
+}
+
+// 🎯 NEW DYNAMIC DETACHED VIEW FOR SELECTED COUNTRIES
+class TargetCountryPage extends StatelessWidget {
+  final String countryName;
+  final String imageUrl;
+  final bool showAppBar;
+
+  const TargetCountryPage({
+    super.key, 
+    required this.countryName, 
+    required this.imageUrl,
+    this.showAppBar = true
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Widget content = SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            // ☁️ DOWNLOADS IMAGES FROM CLOUDINARY LIVE
+            child: Image.network(
+              imageUrl,
+              height: 220,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset('images/gul.jpg', height: 220, fit: BoxFit.cover);
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            'My Travel Memories in $countryName',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Save your ideas, memories, and travel plans for $countryName right here.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 18),
+          TravelNotesModule(countryKey: countryName), // Pass reference down
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
+
+    if (showAppBar) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(countryName, style: const TextStyle(color: Colors.white, fontFamily: "Algerian"),),
+          backgroundColor: const Color.fromARGB(255, 0, 0, 81),
+        ),
+        body: content,
+      );
+    }
+    return content;
   }
 }

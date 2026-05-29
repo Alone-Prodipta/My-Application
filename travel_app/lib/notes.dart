@@ -1,8 +1,10 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class TravelNotesModule extends StatefulWidget {
-  const TravelNotesModule({super.key});
+  final String countryKey;
+  const TravelNotesModule({super.key, required this.countryKey});
 
   @override
   State<TravelNotesModule> createState() => _TravelNotesModuleState();
@@ -12,32 +14,53 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
   final TextEditingController _noteController = TextEditingController();
   final List<String> _notes = [];
   bool _isLoadingNotes = true;
+  final int _mockUserId = 1; // Swap out for active logged-in session ID context variables later
 
   @override
   void initState() {
     super.initState();
-    _loadNotes();
+    _loadNotesFromDatabase();
   }
 
-  @override
-  void dispose() {
-    _noteController.dispose();
-    super.dispose();
+  // 🌐 PULL DATA FROM THE MYSQL DATABASE
+  Future<void> _loadNotesFromDatabase() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2/travel_app/manage_notes.php'),
+        body: jsonEncode({
+          'user_id': _mockUserId,
+          'country_name': widget.countryKey,
+          'action': 'fetch'
+        }),
+      );
+      if (response.statusCode == 200) {
+        final result = jsonDecode(response.body);
+        if (result['status'] == 'success') {
+          setState(() {
+            _notes.clear();
+            _notes.addAll(List<String>.from(result['notes']));
+            _isLoadingNotes = false;
+          });
+        }
+      }
+    } catch (e) {
+      setState(() => _isLoadingNotes = false);
+    }
   }
 
-  Future<void> _loadNotes() async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedNotes = prefs.getStringList('travel_notes') ?? [];
-    setState(() {
-      _notes.clear();
-      _notes.addAll(savedNotes);
-      _isLoadingNotes = false;
-    });
-  }
-
-  Future<void> _saveNotes() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('travel_notes', _notes);
+  // 🌐 SAVE THE NOTE ARRAYS PERMANENTLY TO MYSQL DATABASE
+  Future<void> _syncToDatabase() async {
+    try {
+      await http.post(
+        Uri.parse('http://10.0.2.2/travel_app/manage_notes.php'),
+        body: jsonEncode({
+          'user_id': _mockUserId,
+          'country_name': widget.countryKey,
+          'notes': _notes,
+          'action': 'save'
+        }),
+      );
+    } catch (_) {}
   }
 
   void _addNote() {
@@ -53,7 +76,7 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
       _notes.insert(0, noteText);
       _noteController.clear();
     });
-    _saveNotes();
+    _syncToDatabase();
   }
 
   void _editNote(int index) {
@@ -84,7 +107,7 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
                 setState(() {
                   _notes[index] = updatedText;
                 });
-                _saveNotes();
+                _syncToDatabase();
                 Navigator.of(context).pop();
               },
               child: const Icon(Icons.check),
@@ -99,7 +122,7 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
     setState(() {
       _notes.removeAt(index);
     });
-    _saveNotes();
+    _syncToDatabase();
   }
 
   @override
@@ -118,17 +141,14 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
                 SizedBox(width: 10),
                 Text(
                   'Quick Travel Notes',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Keep a short notes list without leaving the home screen.',
-              style: TextStyle(color: Colors.black54),
+            Text(
+              'Keep a short notes list for ${widget.countryKey} here.',
+              style: const TextStyle(color: Colors.black54),
             ),
             const SizedBox(height: 12),
             TextField(
@@ -136,10 +156,7 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Capture a destination, idea, or memory',
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 12,
-                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               ),
               maxLines: 2,
             ),
@@ -160,14 +177,8 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Notes',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Text(
-                    '${_notes.length} saved',
-                    style: const TextStyle(color: Colors.grey),
-                  ),
+                  Text('Notes', style: Theme.of(context).textTheme.titleMedium),
+                  Text('${_notes.length} saved', style: const TextStyle(color: Colors.grey)),
                 ],
               ),
               const SizedBox(height: 10),
@@ -178,10 +189,7 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
                         child: Text(
                           'No notes yet. Add your first travel memory!',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black54,
-                          ),
+                          style: TextStyle(fontSize: 14, color: Colors.black54),
                         ),
                       )
                     : ListView.separated(
@@ -193,18 +201,11 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(14),
                               boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 4,
-                                  offset: Offset(0, 2),
-                                ),
+                                BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
                               ],
                             ),
                             child: ListTile(
-                              title: Text(
-                                _notes[index],
-                                style: const TextStyle(fontSize: 14),
-                              ),
+                              title: Text(_notes[index], style: const TextStyle(fontSize: 14)),
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
