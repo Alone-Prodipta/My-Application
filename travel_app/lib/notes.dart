@@ -26,13 +26,15 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
   Future<void> _loadNotesFromDatabase() async {
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2/travel_app/manage_notes.php'),
+        Uri.parse('http://10.0.2.2/travel%20app/manege_notes.php'),
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'user_id': _mockUserId,
           'country_name': widget.countryKey,
           'action': 'fetch'
         }),
       );
+
       if (response.statusCode == 200) {
         final result = jsonDecode(response.body);
         if (result['status'] == 'success') {
@@ -41,18 +43,22 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
             _notes.addAll(List<String>.from(result['notes']));
             _isLoadingNotes = false;
           });
+          return;
         }
       }
     } catch (e) {
-      setState(() => _isLoadingNotes = false);
+      debugPrint('Failed to load notes: $e');
     }
+
+    setState(() => _isLoadingNotes = false);
   }
 
   // 🌐 SAVE THE NOTE ARRAYS PERMANENTLY TO MYSQL DATABASE
   Future<void> _syncToDatabase() async {
     try {
-      await http.post(
-        Uri.parse('http://10.0.2.2/travel_app/manage_notes.php'),
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2/travel%20app/manege_notes.php'),
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'user_id': _mockUserId,
           'country_name': widget.countryKey,
@@ -60,7 +66,13 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
           'action': 'save'
         }),
       );
-    } catch (_) {}
+
+      if (response.statusCode != 200) {
+        debugPrint('Failed to sync notes: ${response.statusCode} ${response.body}');
+      }
+    } catch (e) {
+      debugPrint('Sync error: $e');
+    }
   }
 
   void _addNote() {
@@ -148,7 +160,7 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
             const SizedBox(height: 8),
             Text(
               'Keep a short notes list for ${widget.countryKey} here.',
-              style: const TextStyle(color: Colors.black54),
+              style: const TextStyle(color: Colors.black),
             ),
             const SizedBox(height: 12),
             TextField(
@@ -171,9 +183,7 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
               ),
             ),
             const SizedBox(height: 14),
-            if (_isLoadingNotes)
-              const Center(child: CircularProgressIndicator())
-            else ...[
+            
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -189,7 +199,7 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
                         child: Text(
                           'No notes yet. Add your first travel memory!',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 14, color: Colors.black54),
+                          style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
                       )
                     : ListView.separated(
@@ -225,7 +235,6 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
                       ),
               ),
             ],
-          ],
         ),
       ),
     );

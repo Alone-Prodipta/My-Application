@@ -32,7 +32,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> get _pages => [
         // Default lander targets India dynamically initially
-        const TargetCountryPage(countryName: 'India', imageUrl: 'https://res.cloudinary.com/your_cloud/image/upload/india.jpg', showAppBar: false),
+        const TargetCountryPage(
+          countryName: 'India',
+          imageUrl: 'https://res.cloudinary.com/your_cloud/image/upload/india.jpg',
+        ),
         const diary.CountriesPage(),
         const profile.ProfilePage(),
       ];
@@ -98,9 +101,7 @@ class TargetCountryPage extends StatelessWidget {
               imageUrl,
               height: 220,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Image.asset('images/gul.jpg', height: 220, fit: BoxFit.cover);
-              },
+             
             ),
           ),
           const SizedBox(height: 20),

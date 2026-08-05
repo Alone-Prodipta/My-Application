@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main.dart'; // Linked to home layout
+import 'country_page.dart';
 
 class CountriesPage extends StatefulWidget {
   const CountriesPage({super.key});
@@ -39,12 +39,11 @@ class _CountriesPageState extends State<CountriesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: TextField(
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: TextField(
               controller: _searchController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -69,10 +68,24 @@ class _CountriesPageState extends State<CountriesPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => TargetCountryPage(
-                          countryName: countries[index],
-                          // Dynamically structures custom Cloudinary naming convention
-                          imageUrl: 'https://res.cloudinary.com/dpffe7ryv/image/upload/${countries[index].toLowerCase().replaceAll(' ', '_')}.jpg',
+                        builder: (context) => Scaffold(
+                          appBar: AppBar(
+                            title: Text(countries[index], style: const TextStyle(color: Colors.white, fontFamily: "Algerian")),
+                            backgroundColor: const Color.fromARGB(255, 0, 0, 81),
+                          ),
+                          body: TargetCountryPage(
+                            countryName: countries[index],
+                            imageUrl: 'https://res.cloudinary.com/dpffe7ryv/image/upload/${countries[index].toLowerCase().replaceAll(' ', '_')}.jpg',
+                          ),
+                          bottomNavigationBar: BottomNavigationBar(
+                            items: const [
+                              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+                              BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Diary'),
+                              BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+                            ],
+                            currentIndex: 1,
+                            selectedItemColor: const Color.fromARGB(255, 0, 24, 51),
+                          ),
                         ),
                       ),
                     );
@@ -96,7 +109,6 @@ class _CountriesPageState extends State<CountriesPage> {
             ),
           ),
         ],
-      ),
     );
   }
 }
