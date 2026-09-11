@@ -22,7 +22,7 @@ class GalleryApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Basic Gallery App"),
+          title: Text("Basic Gallery App", style: TextStyle(color:Colors.white)),
           backgroundColor: Colors.deepPurple,
         ),
         body: GridView.builder(
