@@ -22,7 +22,6 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
     _loadNotesFromDatabase();
   }
 
-  // 🌐 PULL DATA FROM THE MYSQL DATABASE
   Future<void> _loadNotesFromDatabase() async {
     try {
       final response = await http.post(
@@ -183,58 +182,63 @@ class _TravelNotesModuleState extends State<TravelNotesModule> {
               ),
             ),
             const SizedBox(height: 14),
-            
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Notes', style: Theme.of(context).textTheme.titleMedium),
-                  Text('${_notes.length} saved', style: const TextStyle(color: Colors.grey)),
-                ],
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                height: 180,
-                child: _notes.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'No notes yet. Add your first travel memory!',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 14, color: Colors.black),
-                        ),
-                      )
-                    : ListView.separated(
-                        itemCount: _notes.length,
-                        separatorBuilder: (_, _) => const SizedBox(height: 8),
-                        itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(14),
-                              boxShadow: const [
-                                BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
-                              ],
-                            ),
-                            child: ListTile(
-                              title: Text(_notes[index], style: const TextStyle(fontSize: 14)),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.edit, color: Colors.blue),
-                                    onPressed: () => _editNote(index),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete, color: Colors.red),
-                                    onPressed: () => _deleteNote(index),
-                                  ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Notes', style: Theme.of(context).textTheme.titleMedium),
+                Text('${_notes.length} saved', style: const TextStyle(color: Colors.grey)),
+              ],
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 180,
+              child: _isLoadingNotes
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: Color.fromARGB(255, 0, 0, 81),
+                      ),
+                    )
+                  : _notes.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'No notes yet. Add your first travel memory!',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                          ),
+                        )
+                      : ListView.separated(
+                          itemCount: _notes.length,
+                          separatorBuilder: (_, _) => const SizedBox(height: 8),
+                          itemBuilder: (context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: const [
+                                  BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
                                 ],
                               ),
-                            ),
-                          );
-                        },
-                      ),
-              ),
-            ],
+                              child: ListTile(
+                                title: Text(_notes[index], style: const TextStyle(fontSize: 14)),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.edit, color: Colors.blue),
+                                      onPressed: () => _editNote(index),
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.delete, color: Colors.red),
+                                      onPressed: () => _deleteNote(index),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+            ),
+          ],
         ),
       ),
     );
