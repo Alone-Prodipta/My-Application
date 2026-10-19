@@ -1,56 +1,88 @@
 import 'package:flutter/material.dart';
+import 'package:val_pass/welcome.dart';
 
 void main() {
-  runApp(const val_pass());
+  runApp(const MyApp());
 }
 
-class val_pass extends StatefulWidget {
-  const val_pass({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-  @override
-  State<val_pass> createState() => _val_passState();
-}
-
-class _val_passState extends State<val_pass> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(253, 1, 1, 62),
-          title: Text("Flutter app", style: TextStyle(color: Colors.white)),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const CircleAvatar(
-                radius: 150,
-                child: Icon(Icons.person, size: 150),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: 300,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Enter your name",
-                    border: OutlineInputBorder(),
-                  ),
+      home: ValPass(),
+    );
+  }
+}
+
+class ValPass extends StatefulWidget {
+  const ValPass({super.key});
+
+  @override
+  State<ValPass> createState() => _ValPassState();
+}
+
+class _ValPassState extends State<ValPass> {
+  final TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(253, 1, 1, 62),
+        title: const Text("Flutter app", style: TextStyle(color: Colors.white)),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CircleAvatar(
+              radius: 100,
+              child: Icon(Icons.person, size: 100),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 300,
+              child: TextField(
+                controller: controller,
+                decoration: const InputDecoration(
+                  hintText: "Enter your name",
+                  border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(
-                    const Color.fromARGB(253, 1, 1, 62),
-                  ),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(
+                  const Color.fromARGB(253, 1, 1, 62),
                 ),
-                onPressed: () {},
-                child: const Text("Submit",style: TextStyle(color: Colors.white),),
               ),
-            ],
-          ),
+              onPressed: () {
+                String enteredText = controller.text.toString();
+                
+                // Navigate to the welcome screen and pass the entered text
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Welcome(name: enteredText),
+                  ),
+                );
+              },
+              child: const Text(
+                "Submit",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
         ),
       ),
     );
