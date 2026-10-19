@@ -25,6 +25,11 @@ class _val_passState extends State<val_pass> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              const CircleAvatar(
+                radius: 150,
+                child: Icon(Icons.person, size: 150),
+              ),
+              const SizedBox(height: 20),
               SizedBox(
                 width: 300,
                 child: TextField(
