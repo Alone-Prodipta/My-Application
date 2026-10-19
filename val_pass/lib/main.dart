@@ -4,9 +4,14 @@ void main() {
   runApp(const val_pass());
 }
 
-class val_pass extends StatelessWidget {
+class val_pass extends StatefulWidget {
   const val_pass({super.key});
 
+  @override
+  State<val_pass> createState() => _val_passState();
+}
+
+class _val_passState extends State<val_pass> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
