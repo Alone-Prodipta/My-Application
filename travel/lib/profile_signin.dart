@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http; // Make sure to add http: ^1.2.0 to pubspec.yaml
+import 'package:http/http.dart' as http; 
 import 'dart:convert';
 
 class SigninPage extends StatefulWidget {
@@ -126,7 +126,7 @@ class _SigninPageState extends State<SigninPage> {
                               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                             ),
                             child: const Text(
-                              'Signin',
+                              'Sign In',
                               style: TextStyle(fontSize: 16),
                             ),
                           ),
