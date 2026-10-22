@@ -85,6 +85,20 @@ class _TodoAppState extends State<TodoApp> {
             ),
           ],
         ),
+        bottomNavigationBar:BottomNavigationBar(
+          backgroundColor: const Color.fromARGB(255, 2, 11, 101),
+          items: const <BottomNavigationBarItem>[
+           
+            BottomNavigationBarItem(
+              icon: Icon(Icons.check_circle, color: Colors.white),
+              label: 'Tasks',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.phone, color: Colors.white),
+              label: 'authentication',
+            ),
+          ],
+        ),
       ),
     );
   }
