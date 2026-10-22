@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http; 
+//import 'package:http/http.dart' as http; 
 import 'dart:convert';
 
 class SigninPage extends StatefulWidget {
@@ -38,7 +38,7 @@ class _SigninPageState extends State<SigninPage> {
     final url = Uri.parse('http://10.0.2.2/travel%20app/signup.php');
 
     try {
-      final response = await http.post(
+      final response = await post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({

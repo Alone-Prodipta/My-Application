@@ -4,7 +4,11 @@ allprojects {
         mavenCentral()
     }
 }
-
+dependencies {
+    classpath("com.android.tools.build:gradle:8.3.0")
+    classpath("com.google.gms:google-services:4.5.0") 
+    classpath("com.google.kotlin:kotlin-gradle-plugin:$kotlin_version")
+}
 val newBuildDir: Directory =
     rootProject.layout.buildDirectory
         .dir("../../build")
