@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "858242670429",
+    "project_id": "experiment-dc73c",
+    "storage_bucket": "experiment-dc73c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858242670429:android:d5dcf91e951953848192b4",
+        "android_client_info": {
+          "package_name": "com.example.todo_list"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwEZtxP7PD6aMmasHXUDa0eslfmP56xuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858242670429:android:c226b01cd875059a8192b4",
+        "android_client_info": {
+          "package_name": "com.example.user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwEZtxP7PD6aMmasHXUDa0eslfmP56xuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

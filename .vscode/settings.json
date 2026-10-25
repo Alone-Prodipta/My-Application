@@ -4,5 +4,7 @@
     "zenMode.hideStatusBar": false,
     "telemetry.editStats.showStatusBar": true,
     "problems.showCurrentInStatus": true,
-    "debug.showInStatusBar": "always"
+    "debug.showInStatusBar": "always",
+    "gradle.autoDetect": "off",
+    "java.gradle.buildServer.enabled": "off"
 }
